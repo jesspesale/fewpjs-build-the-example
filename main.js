@@ -29,13 +29,13 @@ function clickHeart() {
           else {
             event.target.innerText = EMPTY_HEART
             event.target.className = ""
-            // hideError()
           }
       })    
       .catch(error => {
         console.error(error)
         let errorModal = document.getElementById('modal')
-        errorModal.classList.remove("hidden")
+        errorModal.className = "not-hidden"
+        // errorModal.classList.remove("hidden")
         errorModal.innerText = error;
         setTimeout(() =>  errorModal.className = "hidden", 3000);
       })      
