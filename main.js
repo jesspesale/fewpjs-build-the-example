@@ -5,32 +5,42 @@ const FULL_HEART = '♥'
 // Your JavaScript code goes here!
 document.addEventListener("DOMContentLoaded", function() {
  	hideError()
-  clickEmptyHeart()
+  clickHeart()
 });
-
 
 function hideError() {
   let error = document.getElementById('modal')
   error.className = "hidden"
 }
 
-function clickEmptyHeart() {
+function clickHeart() {
   let heart = document.getElementsByClassName("like-glyph")
   Array.from(heart).forEach(button => button.addEventListener("click", (event) => {
     event.preventDefault()
-    // mimicServerCall()
-    console.log(event.target)
-    if (event.target.innerText === EMPTY_HEART){
-      event.target.innerText = FULL_HEART
-      console.log("empty to full")
-    }
-    else {
-      event.target.innerText = EMPTY_HEART
-      }
-  }))
-}
 
-
+    mimicServerCall("testurl")
+      .then(response => {
+        console.log("success")
+          if (event.target.innerText === EMPTY_HEART){
+            event.target.innerText = FULL_HEART
+              console.log(event.target)
+              event.target.className = "activated-heart"
+          }
+          else {
+            event.target.innerText = EMPTY_HEART
+            event.target.className = ""
+            // hideError()
+          }
+      })    
+      .catch(error => {
+        console.error(error)
+        let errorModal = document.getElementById('modal')
+        errorModal.classList.remove("hidden")
+        errorModal.innerText = error;
+        setTimeout(() =>  errorModal.className = "hidden", 3000);
+      })      
+      })
+  )}
 
 
 //------------------------------------------------------------------------------
